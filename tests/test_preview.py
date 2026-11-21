@@ -118,6 +118,8 @@ def test_invalid_provider_responses():
     (REFERENCE, {**WORK, "authorships": []}, "possible_match", None),
     (REFERENCE, {**WORK, "authorships": [{"author": {"display_name": "Vaswani, Ashish"}}]}, "verified_match", None),
     (REFERENCE, {**WORK, "publication_year": None}, "possible_match", None),
+    (REFERENCE.replace("Vaswani, A.", "Vaswani, I."), WORK, "possible_match", None),
+    (REFERENCE, {**WORK, "authorships": [{"author": {"display_name": "Vaswani"}}]}, "possible_match", None),
 ])
 def test_matching_regressions(citation, work, status, reason):
     def handler(request):

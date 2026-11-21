@@ -18,6 +18,10 @@ SURNAME_STRONG = 90
 AUTHOR_INITIAL_DIFFERENT = 70
 AUTHOR_SURNAME_ONLY = 80
 SCORE_VERIFIED = 85
+TITLE_WEIGHT = 0.6
+AUTHOR_WEIGHT = 0.1
+YEAR_WEIGHT = 0.1
+DOI_WEIGHT = 0.2
 
 
 def clean_doi(value: str | None) -> str | None:
@@ -61,25 +65,25 @@ def compare(citation: Citation, work: Work) -> tuple[float, Comparison, list[str
     total = 0.0
     if citation.title and work.title:
         result.title_similarity = round(fuzz.ratio(citation.title.casefold(), work.title.casefold()), 1)
-        weighted += result.title_similarity * 0.6
-        total += 0.6
+        weighted += result.title_similarity * TITLE_WEIGHT
+        total += TITLE_WEIGHT
         reasons.append(f"Title similarity: {result.title_similarity:.1f}%.")
     if citation.authors:
         result.author_match = author_similarity(citation.authors, work.authors)
         if result.author_match is not None:
-            weighted += result.author_match * 0.1
-            total += 0.1
+            weighted += result.author_match * AUTHOR_WEIGHT
+            total += AUTHOR_WEIGHT
             reasons.append(f"Author similarity: {result.author_match:.1f}%.")
     if citation.year is not None and work.year is not None:
         result.year_match = citation.year == work.year
-        weighted += 10 if result.year_match else 0
-        total += 0.1
+        weighted += 100 * YEAR_WEIGHT if result.year_match else 0
+        total += YEAR_WEIGHT
         if result.year_match:
             reasons.append("Publication year matches.")
     if citation.doi and work.doi:
         result.doi_match = clean_doi(citation.doi) == clean_doi(work.doi)
-        weighted += 20 if result.doi_match else 0
-        total += 0.2
+        weighted += 100 * DOI_WEIGHT if result.doi_match else 0
+        total += DOI_WEIGHT
         if result.doi_match:
             reasons.append("DOI matches.")
     return round(weighted / total, 1) if total else 0.0, result, reasons
