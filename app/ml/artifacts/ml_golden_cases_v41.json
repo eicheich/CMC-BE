@@ -1,0 +1,166 @@
+{
+  "model_version": "4.1",
+  "feature_order": [
+    "title_similarity",
+    "author_similarity",
+    "year_match",
+    "year_difference",
+    "doi_match",
+    "doi_available",
+    "author_token_match",
+    "author_identity_score",
+    "author_conflict"
+  ],
+  "cases": [
+    {
+      "case_id": "v41_01",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 1.0,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.9970133986254597
+    },
+    {
+      "case_id": "v41_02",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 1.0,
+        "year_match": 0.0,
+        "year_difference": 3.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.000568337143466917
+    },
+    {
+      "case_id": "v41_03",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 0.2962962962962963,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 0.4,
+        "author_identity_score": 0.33333333333333337,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.0003398916237160684
+    },
+    {
+      "case_id": "v41_04",
+      "features": {
+        "title_similarity": 0.3950617283950617,
+        "author_similarity": 1.0,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.0058005523520643955
+    },
+    {
+      "case_id": "v41_05",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 1.0,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 0.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.008227072959222245
+    },
+    {
+      "case_id": "v41_06",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 1.0,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.9970133986254597
+    },
+    {
+      "case_id": "v41_07",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 0.5882352941176471,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 0.9,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.9965370904654507
+    },
+    {
+      "case_id": "v41_08",
+      "features": {
+        "title_similarity": 0.38211382113821135,
+        "author_similarity": 1.0,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 1.0,
+        "doi_available": 1.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.004593752306597644
+    },
+    {
+      "case_id": "v41_09",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 1.0,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 0.0,
+        "doi_available": 0.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 1.0,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.9945450517915722
+    },
+    {
+      "case_id": "v41_10",
+      "features": {
+        "title_similarity": 1.0,
+        "author_similarity": 0.4545454545454546,
+        "year_match": 1.0,
+        "year_difference": 0.0,
+        "doi_match": 0.0,
+        "doi_available": 0.0,
+        "author_token_match": 1.0,
+        "author_identity_score": 0.9,
+        "author_conflict": 0.0
+      },
+      "expected_probability": 0.9965901526368184
+    }
+  ]
+}

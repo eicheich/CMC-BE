@@ -1,0 +1,11 @@
+case_id,label,rule_score,rule_status,rule_prediction,rule_skip_reason,ml_probability,ml_prediction,ml_skip_reason,consistency_issues,error
+same_doi_match,1,100.0,verified_match,1,,0.9900235347794232,1,,[],
+same_no_doi,1,100.0,verified_match,1,,0.9827928961672908,1,,[],
+same_title_variant,1,93.6,verified_match,1,,0.9475719318046412,1,,[],
+same_year_error,1,90.0,metadata_mismatch,,ambiguous_status,0.0021983738516279773,0,,"[""Publication year mismatch: citation states 2023, but metadata reports 2022.""]",
+same_doi_error,1,80.0,metadata_mismatch,,ambiguous_status,0.0025919485069864356,0,,"[""DOI mismatch: citation states 10.5555/cmc.smoke.wrong, but metadata reports 10.5555/cmc.smoke.p05.""]",
+different_unrelated_no_doi,0,23.2,not_found,0,,1.994877113423943e-19,0,,[],
+different_similar_title,0,68.2,metadata_mismatch,,ambiguous_status,6.763311911086153e-10,0,,"[""DOI mismatch: citation states 10.5555/cmc.smoke.n02a, but metadata reports 10.5555/cmc.smoke.n02b."", ""Author mismatch: A. Ford was not found among the publication authors.""]",
+different_same_title,0,60.0,metadata_mismatch,,ambiguous_status,5.524292757576488e-16,0,,"[""DOI mismatch: citation states 10.5555/cmc.smoke.n03a, but metadata reports 10.5555/cmc.smoke.n03b."", ""Publication year mismatch: citation states 2021, but metadata reports 2017."", ""Author mismatch: R. Hall was not found among the publication authors.""]",
+different_unrelated_no_doi_two,0,32.3,not_found,0,,3.220646402916064e-16,0,,[],
+different_doi_and_title,0,35.6,not_found,0,,5.1796419053429866e-21,0,,[],

@@ -5,8 +5,9 @@ import httpx
 from rapidfuzz import fuzz
 
 from app.metadata import fetch_candidates
+from app.ml.predictor import observe_shadow
 from app.parser import parse_citation
-from app.schemas import Citation, Comparison, PreviewResponse, Work
+from app.schemas import Citation, CitationStyle, Comparison, PreviewResponse, Work
 
 
 TITLE_RELEVANT = 65
@@ -125,8 +126,8 @@ def classify(citation: Citation, comparison: Comparison, score: float, issues: l
     return "possible_match"
 
 
-async def verify(raw: str, client: httpx.AsyncClient) -> PreviewResponse:
-    citation = parse_citation(raw)
+async def verify(raw: str, client: httpx.AsyncClient, style: CitationStyle = "apa") -> PreviewResponse:
+    citation = parse_citation(raw, style)
     works, any_success = await fetch_candidates(client, citation)
     if not works:
         return PreviewResponse(status="not_found" if any_success else "verification_unavailable",
@@ -145,5 +146,7 @@ async def verify(raw: str, client: httpx.AsyncClient) -> PreviewResponse:
     if not relevant or status == "not_found":
         return PreviewResponse(status="not_found", input=citation,
                                reasons=["No sufficiently relevant candidate found."])
-    return PreviewResponse(status=status, match_score=score, input=citation,
-                           best_match=best, comparison=comparison, reasons=reasons + issues)
+    response = PreviewResponse(status=status, match_score=score, input=citation,
+                               best_match=best, comparison=comparison, reasons=reasons + issues)
+    observe_shadow(citation, best, style)
+    return response

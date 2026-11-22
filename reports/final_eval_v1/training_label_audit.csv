@@ -1,0 +1,14 @@
+dataset,error_type,label,rows,baseline_present,same_metadata_as_baseline,citation_title_unchanged,citation_author_unchanged,citation_year_unchanged,citation_doi_unchanged,adapter_valid,adapter_skipped,year_match_0,doi_match_0,author_conflict_1,author_identity_score_le_0_5
+cmc_train_v3.csv,author_initial,1,361,361,361,361,0,361,361,359,2,0,61,0,0
+cmc_train_v3.csv,author_mismatch,0,859,859,859,859,0,859,859,808,51,0,174,2,790
+cmc_train_v3.csv,author_name_conflict,0,361,361,361,361,0,361,361,359,2,0,61,328,303
+cmc_train_v3.csv,author_surname,1,361,361,361,361,0,361,361,0,361,0,0,0,0
+cmc_train_v3.csv,doi_mismatch,0,658,658,658,658,658,658,0,649,9,0,649,0,0
+cmc_train_v3.csv,none,1,859,859,859,859,859,859,859,829,30,0,180,0,0
+cmc_train_v3.csv,title_mismatch,0,859,859,859,0,859,859,859,829,30,0,180,0,0
+cmc_train_v3.csv,year_mismatch,0,859,859,859,859,859,0,859,829,30,829,180,0,0
+cmc_labeled_pairs_v2.csv,author_mismatch,0,1074,1074,1074,1074,0,1074,1074,1005,69,0,221,2,977
+cmc_labeled_pairs_v2.csv,doi_mismatch,0,813,813,813,813,813,813,0,803,10,0,803,0,0
+cmc_labeled_pairs_v2.csv,none,1,1074,1074,1074,1074,1074,1074,1074,1029,45,0,226,0,0
+cmc_labeled_pairs_v2.csv,title_mismatch,0,1074,1074,1074,0,1074,1074,1074,1029,45,0,226,0,0
+cmc_labeled_pairs_v2.csv,year_mismatch,0,1074,1074,1074,1074,1074,0,1074,1029,45,1029,226,0,0

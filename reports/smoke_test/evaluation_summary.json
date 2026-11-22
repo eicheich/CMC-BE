@@ -1,0 +1,90 @@
+{
+  "label_definition": "1 = same publication; 0 = different publication, not full citation correctness",
+  "rule_binary_definition": "verified_match = 1; not_found = 0 only when both titles compare below TITLE_RELEVANT; other statuses abstain",
+  "citation_author_format": "given-first",
+  "model_version": "4.1",
+  "ml_threshold": 0.5,
+  "rule_title_relevance_threshold": 65,
+  "counts": {
+    "rows": 10,
+    "valid_labels": 10,
+    "usable_rows": 10,
+    "invalid_or_unusable_rows": 0,
+    "rule_evaluated": 6,
+    "rule_skipped": 4,
+    "ml_evaluated": 10,
+    "ml_skipped": 0,
+    "common_evaluated": 6
+  },
+  "metrics": {
+    "rule_based": {
+      "samples": 6,
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "confusion_matrix": {
+        "tn": 3,
+        "fp": 0,
+        "fn": 0,
+        "tp": 3
+      }
+    },
+    "ml": {
+      "samples": 10,
+      "accuracy": 0.8,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1": 0.7499999999999999,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.4,
+      "confusion_matrix": {
+        "tn": 5,
+        "fp": 0,
+        "fn": 2,
+        "tp": 3
+      }
+    },
+    "common_subset": {
+      "rule_based": {
+        "samples": 6,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "tn": 3,
+          "fp": 0,
+          "fn": 0,
+          "tp": 3
+        }
+      },
+      "ml": {
+        "samples": 6,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "tn": 3,
+          "fp": 0,
+          "fn": 0,
+          "tp": 3
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Only labeled pairs are scored; this does not evaluate retrieval or full citation correctness.",
+    "Ambiguous rule-based statuses abstain, so coverage differs between methods.",
+    "The common subset is required for direct comparison and may not represent all citations.",
+    "Author format is a dataset-wide assumption; mixed formats may skip ML inference.",
+    "Do not treat development data used to select v4.1 as an independent final test."
+  ]
+}
