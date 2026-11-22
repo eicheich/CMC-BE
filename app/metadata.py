@@ -1,10 +1,25 @@
 import os
+import re
+from collections.abc import Callable
 from urllib.parse import quote
 
 import httpx
 from pydantic import ValidationError
 
 from app.schemas import Citation, Work
+
+
+MAX_CANDIDATES = 12
+SEARCH_RESULTS_PER_SOURCE = 5
+
+
+def normalized_doi(value: str | None) -> str | None:
+    return re.sub(r"^https?://(?:dx\.)?doi\.org/", "", value.strip(), flags=re.I).casefold() if value else None
+
+
+def openalex_id(work: Work) -> str | None:
+    match = re.search(r"/W(\d+)$", work.source_url or "", flags=re.I)
+    return f"W{match.group(1)}" if match else None
 
 
 def normalize_crossref(item: dict) -> Work:
@@ -26,9 +41,12 @@ def normalize_openalex(item: dict) -> Work:
                 source="openalex", source_url=item.get("id"))
 
 
-async def fetch_candidates(client: httpx.AsyncClient, citation: Citation) -> tuple[list[Work], bool]:
+async def fetch_candidates(client: httpx.AsyncClient, citation: Citation,
+                           candidate_is_confident: Callable[[Work], bool] | None = None) -> tuple[list[Work], bool]:
     works: list[Work] = []
     any_success = False
+    seen_dois: set[str] = set()
+    seen_openalex_ids: set[str] = set()
     contact = os.getenv("CROSSREF_CONTACT")
     headers = {"User-Agent": f"CheckMyCitation/0.1 (mailto:{contact})" if contact
                else "CheckMyCitation/0.1"}
@@ -38,8 +56,23 @@ async def fetch_candidates(client: httpx.AsyncClient, citation: Citation) -> tup
     def add(item: dict, source: str) -> None:
         try:
             work = normalize_crossref(item) if source == "crossref" else normalize_openalex(item)
-            if work.title or work.doi:
-                works.append(work)
+            doi = normalized_doi(work.doi)
+            identity = openalex_id(work)
+            if (not work.title and not work.doi) or len(works) >= MAX_CANDIDATES:
+                return
+            if doi and doi in seen_dois:
+                if identity:
+                    seen_openalex_ids.add(identity)
+                return
+            if identity and identity in seen_openalex_ids:
+                if doi:
+                    seen_dois.add(doi)
+                return
+            works.append(work)
+            if doi:
+                seen_dois.add(doi)
+            if identity:
+                seen_openalex_ids.add(identity)
         except (AttributeError, TypeError, ValueError, ValidationError):
             pass
 
@@ -74,20 +107,23 @@ async def fetch_candidates(client: httpx.AsyncClient, citation: Citation) -> tup
             add(crossref["message"], "crossref")
         if openalex:
             add(openalex, "openalex")
-        if works:
+        if works and (not citation.title or all(
+                candidate_is_confident(work) if candidate_is_confident else
+                bool(work.title and work.title.strip().casefold() == citation.title.strip().casefold())
+                for work in works)):
             return works, any_success
 
     query = citation.title or citation.raw_citation
-    crossref = await request("https://api.crossref.org/works", params={"query.bibliographic": query, "rows": 5}, crossref=True, list_result=True)
-    openalex = await request("https://api.openalex.org/works", params={"search": query, "per_page": 5, **openalex_params}, list_result=True)
+    crossref = await request("https://api.crossref.org/works", params={"query.bibliographic": query, "rows": SEARCH_RESULTS_PER_SOURCE}, crossref=True, list_result=True)
+    openalex = await request("https://api.openalex.org/works", params={"search": query, "per_page": SEARCH_RESULTS_PER_SOURCE, **openalex_params}, list_result=True)
     if crossref and isinstance(crossref.get("message"), dict):
         items = crossref["message"].get("items")
         if isinstance(items, list):
-            for item in items[:5]:
+            for item in items[:SEARCH_RESULTS_PER_SOURCE]:
                 if isinstance(item, dict):
                     add(item, "crossref")
     if openalex and isinstance(openalex.get("results"), list):
-        for item in openalex["results"][:5]:
+        for item in openalex["results"][:SEARCH_RESULTS_PER_SOURCE]:
             if isinstance(item, dict):
                 add(item, "openalex")
     return works, any_success
