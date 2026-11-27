@@ -1,0 +1,173 @@
+{
+  "status": "passed",
+  "source_files": [
+    "evaluation_candidates_v1.csv",
+    "review_batch_01_reviewed.csv",
+    "review_batch_02_reviewed.csv",
+    "review_batch_03_reviewed.csv",
+    "review_batch_04_reviewed.csv",
+    "review_batch_05_reviewed.csv"
+  ],
+  "total_cases": 50,
+  "unique_case_ids": 50,
+  "expected_case_id_range": [
+    "eval_001",
+    "eval_050"
+  ],
+  "reviewed_label_distribution": {
+    "0": 20,
+    "1": 30
+  },
+  "review_status_distribution": {
+    "approved": 40,
+    "uncertain": 10
+  },
+  "category_distribution": {
+    "different_similar_author": 10,
+    "different_similar_title": 10,
+    "hard_incomplete": 5,
+    "same_consistent": 15,
+    "same_modified": 10
+  },
+  "cases_by_nonapproved_status": {
+    "uncertain": [
+      "eval_041",
+      "eval_042",
+      "eval_043",
+      "eval_044",
+      "eval_045",
+      "eval_046",
+      "eval_047",
+      "eval_048",
+      "eval_049",
+      "eval_050"
+    ],
+    "rejected": [],
+    "pending": []
+  },
+  "metadata_or_provenance_changed": [],
+  "identifier_fields_compared": [
+    "citation_doi",
+    "metadata_doi",
+    "intended_doi",
+    "candidate_doi",
+    "original_doi",
+    "modification_source_doi",
+    "intended_openalex_id",
+    "candidate_openalex_id",
+    "intended_source_url",
+    "candidate_source_url",
+    "modification_source_url"
+  ],
+  "identifier_fields_changed": [],
+  "reviewed_label_differs_from_proposed": [],
+  "cases_requiring_external_verification": [
+    {
+      "case_id": "eval_041",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: distinct intended and candidate OpenAlex IDs and DOIs; differing publication metadata. External identity verification pending."
+    },
+    {
+      "case_id": "eval_042",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: distinct intended and candidate OpenAlex IDs and DOIs; differing publication metadata. External identity verification pending."
+    },
+    {
+      "case_id": "eval_043",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: distinct intended and candidate OpenAlex IDs and DOIs; differing publication metadata. External identity verification pending."
+    },
+    {
+      "case_id": "eval_044",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: distinct intended and candidate OpenAlex IDs and DOIs; differing publication metadata. External identity verification pending."
+    },
+    {
+      "case_id": "eval_045",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: distinct intended and candidate OpenAlex IDs and DOIs; differing publication metadata. External identity verification pending."
+    },
+    {
+      "case_id": "eval_046",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: intended and candidate OpenAlex IDs and source DOI identical; metadata DOI intentionally omitted. External verification pending."
+    },
+    {
+      "case_id": "eval_047",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: intended and candidate OpenAlex IDs and source DOI identical; metadata DOI intentionally omitted. External verification pending."
+    },
+    {
+      "case_id": "eval_048",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: intended and candidate OpenAlex IDs and source DOI identical; metadata DOI intentionally omitted. External verification pending."
+    },
+    {
+      "case_id": "eval_049",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: intended and candidate OpenAlex IDs and source DOI identical; metadata DOI intentionally omitted. External verification pending."
+    },
+    {
+      "case_id": "eval_050",
+      "review_status": "uncertain",
+      "review_notes": "Provisional metadata/provenance review: intended and candidate OpenAlex IDs and source DOI identical; metadata DOI intentionally omitted. External verification pending."
+    }
+  ],
+  "validation_issues": {
+    "missing_case_ids": [],
+    "unexpected_case_ids": [],
+    "duplicate_case_ids": [],
+    "metadata_or_provenance_changed": [],
+    "identifier_fields_changed": [],
+    "invalid_reviewed_label": [],
+    "invalid_review_status": [],
+    "approved_missing_label_or_notes": []
+  },
+  "final_export_readiness": {
+    "approved_valid_cases": 40,
+    "approved_case_ids": [
+      "eval_001",
+      "eval_002",
+      "eval_003",
+      "eval_004",
+      "eval_005",
+      "eval_006",
+      "eval_007",
+      "eval_008",
+      "eval_009",
+      "eval_010",
+      "eval_011",
+      "eval_012",
+      "eval_013",
+      "eval_014",
+      "eval_015",
+      "eval_016",
+      "eval_017",
+      "eval_018",
+      "eval_019",
+      "eval_020",
+      "eval_021",
+      "eval_022",
+      "eval_023",
+      "eval_024",
+      "eval_025",
+      "eval_026",
+      "eval_027",
+      "eval_028",
+      "eval_029",
+      "eval_030",
+      "eval_031",
+      "eval_032",
+      "eval_033",
+      "eval_034",
+      "eval_035",
+      "eval_036",
+      "eval_037",
+      "eval_038",
+      "eval_039",
+      "eval_040"
+    ],
+    "excluded_uncertain_pending_rejected": 10,
+    "final_export_performed": false
+  }
+}

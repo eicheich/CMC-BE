@@ -1,0 +1,137 @@
+{
+  "batch": "05",
+  "retrieved_at_utc": "2026-11-22T19:22:05+00:00",
+  "source_dataset": "data/evaluation_review_combined_v1.csv",
+  "cases_checked": 10,
+  "evidence_rows": 19,
+  "api_requests": {
+    "OpenAlex": 15,
+    "Crossref": 4,
+    "failed": 0
+  },
+  "identity_assessment_counts": {
+    "different": 5,
+    "same": 5
+  },
+  "verification_status_counts": {
+    "supported": 10
+  },
+  "status_definition": {
+    "supported": "External records support the provisional reviewed_label identity assessment.",
+    "conflicting": "External records contradict the provisional reviewed_label identity assessment.",
+    "insufficient": "Records could not be retrieved or do not establish publication identity."
+  },
+  "cases": [
+    {
+      "case_id": "eval_041",
+      "identity_assessment": "different",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W3026009695",
+        "https://api.openalex.org/works/W4376618280",
+        "https://api.crossref.org/works/10.3322/caac.21610",
+        "https://api.crossref.org/works/10.1158/1055-9965.epi-22-1234"
+      ],
+      "evidence_notes": "The 2023 Cancer Epidemiology, Biomarkers & Prevention article cites the 2020 CA: A Cancer Journal for Clinicians article (same title and lead author). Crossref shows different coauthors, journals, years, and page ranges; this is a later related publication, not the same article or a preprint duplicate."
+    },
+    {
+      "case_id": "eval_042",
+      "identity_assessment": "different",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W4321225268",
+        "https://api.openalex.org/works/W4210545431"
+      ],
+      "evidence_notes": "The intended Industrial and Corporate Change article is Climate change and growth (2023; Stern and Stiglitz); the candidate Economic Journal article is A Time for Action on Climate Change and a Time for Change in Economics (2022; Stern). Shared author and topic do not establish the same publication."
+    },
+    {
+      "case_id": "eval_043",
+      "identity_assessment": "different",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W4322624932",
+        "https://api.openalex.org/works/W4376287019",
+        "https://api.crossref.org/works/10.1111/jofi.13219",
+        "https://api.crossref.org/works/10.1287/mnsc.2023.4686"
+      ],
+      "evidence_notes": "Crossref shows distinct Journal of Finance and Management Science articles with different research aims, page ranges, and DOIs; each reference list cites the other DOI. OpenAlex reports 2021 for the Management Science record while Crossref published date is 2023; the year discrepancy does not merge their identities."
+    },
+    {
+      "case_id": "eval_044",
+      "identity_assessment": "different",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W4381051112",
+        "https://api.openalex.org/works/W4393055287"
+      ],
+      "evidence_notes": "The intended Natural Hazards review concerns weather, climate, and transport; the candidate Tourism Geographies article concerns tourism geographies. They share a lead author but differ in title, coauthors, journal, and publication year."
+    },
+    {
+      "case_id": "eval_045",
+      "identity_assessment": "different",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W3147512375",
+        "https://api.openalex.org/works/W4383499777"
+      ],
+      "evidence_notes": "The intended Science of the Total Environment article studies microplastics in bivalves; the candidate Science Advances article studies Alaska pollock. Overlapping authors do not make these the same publication."
+    },
+    {
+      "case_id": "eval_046",
+      "identity_assessment": "same",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W4319039935"
+      ],
+      "evidence_notes": "Intended and candidate provenance point to the same OpenAlex work and DOI; the live OpenAlex record confirms the title, authors, year, and DOI. The dataset metadata_doi field is intentionally blank."
+    },
+    {
+      "case_id": "eval_047",
+      "identity_assessment": "same",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W4297207068"
+      ],
+      "evidence_notes": "Intended and candidate provenance point to the same OpenAlex work and DOI; the live OpenAlex record confirms the title, authors, year, and DOI. The dataset metadata_doi field is intentionally blank."
+    },
+    {
+      "case_id": "eval_048",
+      "identity_assessment": "same",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W2998186396"
+      ],
+      "evidence_notes": "Intended and candidate provenance point to the same OpenAlex work and DOI; the live OpenAlex record confirms the title, authors, year, and DOI. The dataset metadata_doi field is intentionally blank."
+    },
+    {
+      "case_id": "eval_049",
+      "identity_assessment": "same",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W3210002453"
+      ],
+      "evidence_notes": "Intended and candidate provenance point to the same OpenAlex work and DOI; the live OpenAlex record confirms the title, authors, year, and DOI. The dataset metadata_doi field is intentionally blank."
+    },
+    {
+      "case_id": "eval_050",
+      "identity_assessment": "same",
+      "verification_status": "supported",
+      "source_urls": [
+        "https://api.openalex.org/works/W3197078525"
+      ],
+      "evidence_notes": "Intended and candidate provenance point to the same OpenAlex work and DOI; the live OpenAlex record confirms the title, authors, year, and DOI. The dataset metadata_doi field is intentionally blank."
+    }
+  ],
+  "ambiguous_cases": [],
+  "metadata_discrepancies": [
+    {
+      "case_id": "eval_043",
+      "field": "candidate_publication_year",
+      "OpenAlex": 2021,
+      "Crossref": 2023,
+      "note": "Crossref published date is 2023-12; this discrepancy does not change the distinct-work assessment."
+    }
+  ],
+  "review_files_modified": false,
+  "labels_or_review_status_changed": false
+}

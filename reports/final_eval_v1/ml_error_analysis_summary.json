@@ -1,0 +1,210 @@
+{
+  "purpose": "Diagnostic analysis of same-publication false negatives; no model tuning.",
+  "model_version": "4.1",
+  "threshold": 0.5,
+  "author_format": "given-first (runner uses ieee adapter)",
+  "input_sha256": {
+    "data\\evaluation_pairs_v1.csv": "de47888b1347b62af3d04b18455c6c1b454537b0b149f5a3c0fd3d6a1c507f9b",
+    "reports\\final_eval_v1\\evaluation_results.csv": "04fb29e33b29d895c4bcdf1784bfa8b02fa117ccc26ea15de8018e53caaf1bc8",
+    "D:\\01 Houselab\\CMC\\backend\\app\\ml\\artifacts\\logistic_regression_v41_metadata.json": "fa6f71c20ba0e9bd402dfe3b28946030c7072ad9a09adba53c7c722ac57b991d"
+  },
+  "cases_analyzed": 10,
+  "false_negative_case_ids": [
+    "eval_016",
+    "eval_017",
+    "eval_018",
+    "eval_019",
+    "eval_020",
+    "eval_021",
+    "eval_022",
+    "eval_023",
+    "eval_024",
+    "eval_025"
+  ],
+  "source_modification_type_available": false,
+  "modification_type_limitation": "The allowed evaluation pairs and results CSVs contain no modification_type column. Inferred_error_type is based on visible pair values and v4.1 features, not original modification provenance.",
+  "inferred_error_distribution": {
+    "year": {
+      "count": 4,
+      "case_ids": [
+        "eval_016",
+        "eval_019",
+        "eval_022",
+        "eval_025"
+      ]
+    },
+    "doi": {
+      "count": 3,
+      "case_ids": [
+        "eval_017",
+        "eval_020",
+        "eval_023"
+      ]
+    },
+    "author": {
+      "count": 3,
+      "case_ids": [
+        "eval_018",
+        "eval_021",
+        "eval_024"
+      ]
+    },
+    "other": {
+      "count": 0,
+      "case_ids": []
+    }
+  },
+  "feature_order": [
+    "title_similarity",
+    "author_similarity",
+    "year_match",
+    "year_difference",
+    "doi_match",
+    "doi_available",
+    "author_token_match",
+    "author_identity_score",
+    "author_conflict"
+  ],
+  "feature_probability_reproduction": {
+    "cases_checked": 50,
+    "probabilities_match_saved_results": true,
+    "predictions_match_saved_results": true
+  },
+  "false_negative_stats": {
+    "cases": 10,
+    "probability_min": 0.002152406739719838,
+    "probability_max": 0.01818699278397157,
+    "probability_median": 0.007357076996322883,
+    "feature_median": {
+      "title_similarity": 1.0,
+      "author_similarity": 1.0,
+      "year_match": 1.0,
+      "year_difference": 0.0,
+      "doi_match": 1.0,
+      "doi_available": 1.0,
+      "author_token_match": 1.0,
+      "author_identity_score": 1.0,
+      "author_conflict": 0.0
+    },
+    "feature_range": {
+      "title_similarity": [
+        1.0,
+        1.0
+      ],
+      "author_similarity": [
+        0.2941176470588235,
+        1.0
+      ],
+      "year_match": [
+        0.0,
+        1.0
+      ],
+      "year_difference": [
+        0.0,
+        1.0
+      ],
+      "doi_match": [
+        0.0,
+        1.0
+      ],
+      "doi_available": [
+        1.0,
+        1.0
+      ],
+      "author_token_match": [
+        0.4444444444444444,
+        1.0
+      ],
+      "author_identity_score": [
+        0.4444444444444444,
+        1.0
+      ],
+      "author_conflict": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "true_positive_stats": {
+    "cases": 20,
+    "probability_min": 0.9945450517915722,
+    "probability_max": 0.9970133986254597,
+    "probability_median": 0.9970133986254597,
+    "feature_median": {
+      "title_similarity": 1.0,
+      "author_similarity": 1.0,
+      "year_match": 1.0,
+      "year_difference": 0.0,
+      "doi_match": 1.0,
+      "doi_available": 1.0,
+      "author_token_match": 1.0,
+      "author_identity_score": 1.0,
+      "author_conflict": 0.0
+    },
+    "feature_range": {
+      "title_similarity": [
+        1.0,
+        1.0
+      ],
+      "author_similarity": [
+        1.0,
+        1.0
+      ],
+      "year_match": [
+        1.0,
+        1.0
+      ],
+      "year_difference": [
+        0.0,
+        0.0
+      ],
+      "doi_match": [
+        0.0,
+        1.0
+      ],
+      "doi_available": [
+        0.0,
+        1.0
+      ],
+      "author_token_match": [
+        1.0,
+        1.0
+      ],
+      "author_identity_score": [
+        1.0,
+        1.0
+      ],
+      "author_conflict": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "positive_reference_subgroups": {
+    "doi_present_and_matching": {
+      "count": 15,
+      "probability": 0.9970133986254597
+    },
+    "metadata_doi_missing": {
+      "count": 5,
+      "probability": 0.9945450517915722
+    }
+  },
+  "single_mismatch_effect_from_model": {
+    "year_mismatch_log_odds_change_vs_fully_matching_year": -10.715336430539171,
+    "doi_mismatch_log_odds_change_vs_matching_available_doi": -10.60269201241342,
+    "interpretation": "These are local linear-logit effects with other features held fixed; not causal estimates of real-world error."
+  },
+  "observations": [
+    "All ten false negatives retain title_similarity=1.0; one visible year, DOI, or author discrepancy is sufficient for probabilities below 0.5 in this dataset.",
+    "Four one-year differences set year_match=0 and year_difference=1 while DOI and author identity remain matched.",
+    "Three different available DOIs set doi_match=0 while year and author identity remain matched. Missing metadata DOI in five true positives also sets doi_match=0 but doi_available=0 and does not cause a false negative.",
+    "Three changed citation authors lower author_identity_score and author_token_match, but author_conflict remains 0. This is an observed feature behavior, not proof of an adapter bug.",
+    "The adapter calls the Colab reference feature extractor directly and all 50 recomputed probabilities match saved inference. Training-row preprocessing parity cannot be established without original training rows and expected features."
+  ],
+  "recommended_experiments_without_current_dataset_tuning": [
+    "Audit original training-label semantics and prevalence of same-publication pairs with incorrect year, DOI, or author.",
+    "Compare raw training rows and stored expected features with the current adapter, including changed-author examples.",
+    "Design a separate untouched challenge set with independently reviewed same-publication metadata errors; assess coverage and calibration before any model revision."
+  ]
+}

@@ -1,0 +1,11 @@
+case_id,citation_title,citation_author,citation_year,citation_doi,metadata_title,metadata_authors,metadata_year,metadata_doi,label
+same_doi_match,Adaptive River Models for Coastal Mapping,A. Rivera,2021,10.5555/cmc.smoke.p01,Adaptive River Models for Coastal Mapping,Alice Rivera;Ben Hart,2021,10.5555/cmc.smoke.p01,1
+same_no_doi,Graph Methods for Library Search,M. Chen,2020,,Graph Methods for Library Search,Mei Chen;Tom Bell,2020,,1
+same_title_variant,Efficient Orchard Image Classification: A Study,L. Singh,2022,10.5555/cmc.smoke.p03,Efficient Orchard Image Classification,Lina Singh;Omar Patel,2022,10.5555/cmc.smoke.p03,1
+same_year_error,Urban Rainfall Forecasting with Sensors,R. Noor,2023,10.5555/cmc.smoke.p04,Urban Rainfall Forecasting with Sensors,Rina Noor;Leo Kim,2022,10.5555/cmc.smoke.p04,1
+same_doi_error,Synthetic Protein Indexing,K. Alvarez,2019,10.5555/cmc.smoke.wrong,Synthetic Protein Indexing,Kira Alvarez;Nina Lee,2019,10.5555/cmc.smoke.p05,1
+different_unrelated_no_doi,Quantum Banana Networks for Coffee,J. Smith,2024,,Marine Sediment Catalogs,Pia Wong,2018,,0
+different_similar_title,Graph Methods for Library Search,A. Ford,2020,10.5555/cmc.smoke.n02a,Graph Methods for Library Searches,Maya Chen,2020,10.5555/cmc.smoke.n02b,0
+different_same_title,Climate Sensor Calibration,R. Hall,2021,10.5555/cmc.smoke.n03a,Climate Sensor Calibration,Nora Ruiz,2017,10.5555/cmc.smoke.n03b,0
+different_unrelated_no_doi_two,Acoustic Mapping of Sea Ice,E. Brooks,2018,,Botanical Survey of Wetlands,Dana Lopez,2021,,0
+different_doi_and_title,Neural Sketching for Manuscript Search,T. Mori,2023,10.5555/cmc.smoke.n05a,Manual Indexing of Ancient Maps,Kai Park,2016,10.5555/cmc.smoke.n05b,0

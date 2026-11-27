@@ -1,0 +1,58 @@
+{
+  "status": "passed_for_supplied_sources",
+  "training_dataset_available": false,
+  "development_benchmark_available": false,
+  "reason": "No original-publication identifier overlap in the supplied exclusion set. Full v4.1 training coverage is unverified.",
+  "comparison_method": "Exact normalized DOI/OpenAlex ID comparison against supplied exclusion identifiers; candidate publication identities and citation_doi are classified separately using provenance.",
+  "candidate_pairs_compared": 50,
+  "candidate_unique_publications_referenced": 59,
+  "source_rows_compared": 207,
+  "sources": [
+    {
+      "file": "reference/cmc_independent_publications.csv",
+      "kind": "independent_named",
+      "rows": 197,
+      "rows_with_identifiers": 197,
+      "unique_dois": 172,
+      "unique_openalex_ids": 197
+    },
+    {
+      "file": "smoke_test_pairs.csv",
+      "kind": "synthetic_smoke",
+      "rows": 10,
+      "rows_with_identifiers": 7,
+      "unique_dois": 11,
+      "unique_openalex_ids": 0
+    }
+  ],
+  "overlapping_pairs": 0,
+  "unique_matched_dois": 0,
+  "unique_matched_openalex_ids": 0,
+  "unique_overlapping_candidate_publications": 0,
+  "affected_pairs": [],
+  "limitations": [
+    "A filename does not prove that a source contains the complete v4.1 training set.",
+    "Identifier-only comparison cannot detect the same publication when both datasets omit or use different identifiers.",
+    "The 359-work collection pool was not saved as a publication CSV; this audit covers publications referenced by the 50 candidate pairs.",
+    "The supplied exclusion provenance names older source files; completeness for all v4.1 training/development data was not independently verified."
+  ],
+  "exclusion_identifier_rows": 2299,
+  "exclusion_unique_identifiers": 2299,
+  "exclusion_provenance_rows": 11156,
+  "exclusion_identifiers_without_provenance": 0,
+  "provenance_identifiers_not_excluded": 0,
+  "provenance_source_files": [
+    "cmc_clean_publications.csv",
+    "cmc_independent_benchmark_v1.csv",
+    "cmc_independent_publications.csv",
+    "cmc_labeled_pairs.csv",
+    "cmc_labeled_pairs_v2.csv",
+    "cmc_publications_v2.csv",
+    "cmc_test_v2.csv",
+    "cmc_train_v2.csv",
+    "cmc_train_v3.csv"
+  ],
+  "training_coverage_status": "unverified_completeness",
+  "publication_overlap_pairs": 0,
+  "synthetic_citation_overlap_pairs": 0
+}

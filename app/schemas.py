@@ -3,8 +3,12 @@ from typing import Literal
 from pydantic import BaseModel, Field, field_validator
 
 
+CitationStyle = Literal["apa", "ieee", "mla", "chicago", "harvard", "vancouver"]
+
+
 class PreviewRequest(BaseModel):
     citation: str = Field(min_length=1, max_length=2000)
+    style: CitationStyle = "apa"
 
     @field_validator("citation")
     @classmethod

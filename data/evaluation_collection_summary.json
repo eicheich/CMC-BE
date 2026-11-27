@@ -1,0 +1,24 @@
+{
+  "real_publications_collected": 359,
+  "candidate_pairs": 50,
+  "categories": {
+    "same_consistent": 15,
+    "same_modified": 10,
+    "different_similar_title": 10,
+    "different_similar_author": 10,
+    "hard_incomplete": 5
+  },
+  "unique_dois": 359,
+  "unique_openalex_ids": 359,
+  "duplicates_removed": 8,
+  "overlaps_removed": 0,
+  "incomplete_removed": 3,
+  "pending_review": 50,
+  "overlap_status": "unchecked",
+  "exclusion_dois": 0,
+  "exclusion_openalex_ids": 0,
+  "network_requests": 6,
+  "cache_hits": 2,
+  "api_errors": [],
+  "note": "Proposed labels need manual review. No final evaluation was run."
+}

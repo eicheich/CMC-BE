@@ -1,12 +1,14 @@
 import re
 import unicodedata
+from typing import Literal, NamedTuple
 
 import httpx
 from rapidfuzz import fuzz
 
 from app.metadata import fetch_candidates
+from app.ml.predictor import observe_shadow
 from app.parser import parse_citation
-from app.schemas import Citation, Comparison, PreviewResponse, Work
+from app.schemas import Citation, CitationStyle, Comparison, PreviewResponse, Work
 
 
 TITLE_RELEVANT = 65
@@ -22,6 +24,17 @@ TITLE_WEIGHT = 0.6
 AUTHOR_WEIGHT = 0.1
 YEAR_WEIGHT = 0.1
 DOI_WEIGHT = 0.2
+
+FieldAssessment = Literal["match", "mismatch", "unavailable"]
+IdentityAssessment = Literal["same", "different", "uncertain"]
+
+
+class MetadataAssessment(NamedTuple):
+    title: FieldAssessment
+    author: FieldAssessment
+    year: FieldAssessment
+    doi: FieldAssessment
+    complete: bool
 
 
 def clean_doi(value: str | None) -> str | None:
@@ -89,6 +102,50 @@ def compare(citation: Citation, work: Work) -> tuple[float, Comparison, list[str
     return round(weighted / total, 1) if total else 0.0, result, reasons
 
 
+def assess_identity(comparison: Comparison) -> IdentityAssessment:
+    title = comparison.title_similarity
+    author = comparison.author_match
+    if title is None:
+        return "uncertain"
+    if title < TITLE_DOI_CONFLICT and comparison.doi_match is True:
+        return "different"
+    if title < TITLE_RELEVANT:
+        return "different"
+    if title >= TITLE_STRONG:
+        if author is not None and author >= AUTHOR_STRONG:
+            return "uncertain" if comparison.year_match is False and comparison.doi_match is False else "same"
+        if comparison.doi_match is True and comparison.year_match is True:
+            return "same"
+        if title == 100 and comparison.year_match is True and comparison.doi_match is not False:
+            return "same"
+        return "uncertain"
+    if (author is not None and author < AUTHOR_CONFLICT and comparison.year_match is False
+            and comparison.doi_match is False):
+        return "different"
+    return "uncertain"
+
+
+def assess_metadata(citation: Citation, comparison: Comparison) -> MetadataAssessment:
+    def similarity_state(value: float | None, minimum: float) -> FieldAssessment:
+        if value is None:
+            return "unavailable"
+        return "match" if value >= minimum else "mismatch"
+
+    def boolean_state(value: bool | None) -> FieldAssessment:
+        if value is None:
+            return "unavailable"
+        return "match" if value else "mismatch"
+
+    complete = ((not citation.authors or comparison.author_match is not None)
+                and (citation.year is None or comparison.year_match is not None)
+                and (citation.doi is None or comparison.doi_match is not None))
+    return MetadataAssessment(
+        title=similarity_state(comparison.title_similarity, TITLE_RELEVANT),
+        author=similarity_state(comparison.author_match, AUTHOR_CONFLICT),
+        year=boolean_state(comparison.year_match), doi=boolean_state(comparison.doi_match),
+        complete=complete)
+
+
 def consistency_issues(citation: Citation, work: Work, comparison: Comparison) -> list[str]:
     title = comparison.title_similarity
     relevant = (title is not None and title >= TITLE_RELEVANT) or comparison.doi_match is True
@@ -108,26 +165,38 @@ def consistency_issues(citation: Citation, work: Work, comparison: Comparison) -
     return issues
 
 
-def classify(citation: Citation, comparison: Comparison, score: float, issues: list[str]) -> str:
+def classify(citation: Citation, comparison: Comparison, score: float, issues: list[str], *,
+             identity: IdentityAssessment | None = None,
+             metadata: MetadataAssessment | None = None) -> str:
     title = comparison.title_similarity
     relevant = (title is not None and title >= TITLE_RELEVANT) or comparison.doi_match is True
     if not relevant:
         return "not_found"
-    if issues:
+    identity = identity or assess_identity(comparison)
+    metadata = metadata or assess_metadata(citation, comparison)
+    if identity == "different":
+        return "metadata_mismatch" if comparison.doi_match is True and title < TITLE_DOI_CONFLICT else "not_found"
+    if identity == "uncertain":
+        return "possible_match"
+    if "mismatch" in metadata[:4] or issues:
         return "metadata_mismatch"
-    complete = (not citation.authors or comparison.author_match is not None) and (
-        citation.year is None or comparison.year_match is not None) and (
-        citation.doi is None or comparison.doi_match is not None)
     strong_identity = comparison.doi_match is True or (
         comparison.author_match is not None and comparison.author_match >= AUTHOR_STRONG)
-    if complete and strong_identity and score >= SCORE_VERIFIED and title is not None and title >= TITLE_STRONG:
+    if metadata.complete and strong_identity and score >= SCORE_VERIFIED and title is not None and title >= TITLE_STRONG:
         return "verified_match"
     return "possible_match"
 
 
-async def verify(raw: str, client: httpx.AsyncClient) -> PreviewResponse:
-    citation = parse_citation(raw)
-    works, any_success = await fetch_candidates(client, citation)
+async def verify(raw: str, client: httpx.AsyncClient, style: CitationStyle = "apa") -> PreviewResponse:
+    citation = parse_citation(raw, style)
+
+    def title_author_support(comparison: Comparison) -> bool:
+        return (comparison.title_similarity is not None and comparison.title_similarity >= TITLE_STRONG
+                and (not citation.authors or comparison.author_match is not None
+                     and comparison.author_match >= AUTHOR_STRONG))
+
+    works, any_success = await fetch_candidates(
+        client, citation, lambda work: title_author_support(compare(citation, work)[1]))
     if not works:
         return PreviewResponse(status="not_found" if any_success else "verification_unavailable",
                                input=citation, reasons=["No candidate found in available metadata sources." if any_success
@@ -136,14 +205,21 @@ async def verify(raw: str, client: httpx.AsyncClient) -> PreviewResponse:
     ranked = []
     for work in works:
         score, comparison, reasons = compare(citation, work)
+        identity = assess_identity(comparison)
+        metadata = assess_metadata(citation, comparison)
         issues = consistency_issues(citation, work, comparison)
         relevant = (comparison.title_similarity is not None and
                     comparison.title_similarity >= TITLE_RELEVANT) or comparison.doi_match is True
-        ranked.append((relevant, score, not issues, work, comparison, reasons, issues))
-    relevant, score, _, best, comparison, reasons, issues = max(ranked, key=lambda item: item[:3])
-    status = classify(citation, comparison, score, issues)
+        rank = {"same": 2, "uncertain": 1, "different": 0}[identity]
+        ranked.append((relevant, rank, title_author_support(comparison), score, not issues,
+                       work, comparison, reasons, issues, identity, metadata))
+    relevant, _, _, score, _, best, comparison, reasons, issues, identity, metadata = max(
+        ranked, key=lambda item: item[:5])
+    status = classify(citation, comparison, score, issues, identity=identity, metadata=metadata)
     if not relevant or status == "not_found":
         return PreviewResponse(status="not_found", input=citation,
                                reasons=["No sufficiently relevant candidate found."])
-    return PreviewResponse(status=status, match_score=score, input=citation,
-                           best_match=best, comparison=comparison, reasons=reasons + issues)
+    response = PreviewResponse(status=status, match_score=score, input=citation,
+                               best_match=best, comparison=comparison, reasons=reasons + issues)
+    observe_shadow(citation, best, style)
+    return response

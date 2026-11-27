@@ -1,0 +1,241 @@
+{
+  "status": "completed_with_training_parity_limitations",
+  "model_metadata": {
+    "model_version": "4.1",
+    "feature_version": "4.1",
+    "training_samples": 5153,
+    "training_rows_minus_metadata_samples": 24,
+    "feature_order_matches": true,
+    "features": [
+      "title_similarity",
+      "author_similarity",
+      "year_match",
+      "year_difference",
+      "doi_match",
+      "doi_available",
+      "author_token_match",
+      "author_identity_score",
+      "author_conflict"
+    ],
+    "sha256": "fa6f71c20ba0e9bd402dfe3b28946030c7072ad9a09adba53c7c722ac57b991d"
+  },
+  "datasets": {
+    "cmc_train_v3.csv": {
+      "rows": 5177,
+      "unique_openalex_ids": 859,
+      "unique_metadata_dois": 658,
+      "labels": {
+        "0": 3596,
+        "1": 1581
+      },
+      "error_types": {
+        "author_initial": 361,
+        "author_mismatch": 859,
+        "author_name_conflict": 361,
+        "author_surname": 361,
+        "doi_mismatch": 658,
+        "none": 859,
+        "title_mismatch": 859,
+        "year_mismatch": 859
+      },
+      "label_by_error_type": {
+        "author_initial": {
+          "1": 361
+        },
+        "author_mismatch": {
+          "0": 859
+        },
+        "author_name_conflict": {
+          "0": 361
+        },
+        "author_surname": {
+          "1": 361
+        },
+        "doi_mismatch": {
+          "0": 658
+        },
+        "none": {
+          "1": 859
+        },
+        "title_mismatch": {
+          "0": 859
+        },
+        "year_mismatch": {
+          "0": 859
+        }
+      },
+      "adapter_valid": 4662,
+      "adapter_skipped": 515,
+      "adapter_skip_reasons": [
+        {
+          "error_type": "author_initial",
+          "label": "1",
+          "reason": "author_name_format",
+          "count": 2
+        },
+        {
+          "error_type": "author_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 51
+        },
+        {
+          "error_type": "author_name_conflict",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 2
+        },
+        {
+          "error_type": "author_surname",
+          "label": "1",
+          "reason": "author_name_format",
+          "count": 361
+        },
+        {
+          "error_type": "doi_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 9
+        },
+        {
+          "error_type": "none",
+          "label": "1",
+          "reason": "author_name_format",
+          "count": 30
+        },
+        {
+          "error_type": "title_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 30
+        },
+        {
+          "error_type": "year_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 30
+        }
+      ],
+      "reference_extraction_rows": 4662,
+      "single_vs_batch_extraction_checks": 3,
+      "source_hash_sha256": "1a2ceb371d56c3d20b00e22cccbcdaa7923dd5e9be72b363fec18f6c5f209fef"
+    },
+    "cmc_labeled_pairs_v2.csv": {
+      "rows": 5109,
+      "unique_openalex_ids": 1074,
+      "unique_metadata_dois": 813,
+      "labels": {
+        "0": 4035,
+        "1": 1074
+      },
+      "error_types": {
+        "author_mismatch": 1074,
+        "doi_mismatch": 813,
+        "none": 1074,
+        "title_mismatch": 1074,
+        "year_mismatch": 1074
+      },
+      "label_by_error_type": {
+        "author_mismatch": {
+          "0": 1074
+        },
+        "doi_mismatch": {
+          "0": 813
+        },
+        "none": {
+          "1": 1074
+        },
+        "title_mismatch": {
+          "0": 1074
+        },
+        "year_mismatch": {
+          "0": 1074
+        }
+      },
+      "adapter_valid": 4895,
+      "adapter_skipped": 214,
+      "adapter_skip_reasons": [
+        {
+          "error_type": "author_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 69
+        },
+        {
+          "error_type": "doi_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 10
+        },
+        {
+          "error_type": "none",
+          "label": "1",
+          "reason": "author_name_format",
+          "count": 45
+        },
+        {
+          "error_type": "title_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 45
+        },
+        {
+          "error_type": "year_mismatch",
+          "label": "0",
+          "reason": "author_name_format",
+          "count": 45
+        }
+      ],
+      "reference_extraction_rows": 4895,
+      "single_vs_batch_extraction_checks": 3,
+      "source_hash_sha256": "3a0cd7643fe9e00da528ff3aab9e251c7e59a7ded5e00935f4ff7248e017505e"
+    }
+  },
+  "same_metadata_changed_citation_label_zero": {
+    "cmc_train_v3.csv": {
+      "year_mismatch": 859,
+      "doi_mismatch": 658,
+      "author_mismatch": 859
+    },
+    "cmc_labeled_pairs_v2.csv": {
+      "year_mismatch": 1074,
+      "doi_mismatch": 813,
+      "author_mismatch": 1074
+    }
+  },
+  "semantic_assessment": {
+    "label_1": "Consistent citation rows, plus author initials and surname abbreviations in v3; these share a baseline OpenAlex work and metadata.",
+    "label_0": "A citation field was deliberately changed relative to the same OpenAlex work and metadata baseline. This does not consistently mean a different publication.",
+    "evidence_basis": "Matched each error row to a none row by OpenAlex ID; compared all four metadata fields and the four citation fields. DOI, year, and author error rows retain the baseline publication metadata while one citation field changes.",
+    "training_vs_evaluation_mismatch": "Training negatives include same-publication citation metadata errors; the independent evaluation label 1 means same publication even when citation metadata is wrong.",
+    "identity_caveat": "An OpenAlex ID here belongs to the metadata work only. A changed citation DOI/title can identify another work; without a second resolved identifier this audit cannot prove identity for every individual erroneous citation."
+  },
+  "preprocessing_assessment": {
+    "stored_expected_feature_columns_present": false,
+    "reference_extractor_used_by_adapter": true,
+    "single_row_vs_batch_checks_per_dataset": 3,
+    "training_feature_parity_proven": false,
+    "notable_feature_behavior": [
+      "year_match=0 for every adapter-valid year_mismatch row in both datasets.",
+      "doi_match=0 for every adapter-valid doi_mismatch row; it is also 0 when both DOI fields are empty, so doi_available must be considered.",
+      "Generic author_mismatch rows have low author_identity_score but author_conflict=1 rarely; v3 author_name_conflict rows trigger author_conflict much more often.",
+      "The given-first adapter rejects surname-only citation authors; every v3 author_surname row is skipped."
+    ],
+    "adapter_style_checked": "ieee (given-first)",
+    "v3_rows_not_accepted_by_current_adapter": 515,
+    "v2_rows_not_accepted_by_current_adapter": 214,
+    "training_row_count_discrepancy": "v3 has 5177 rows while model metadata lists 5153 training samples; no manifest or stored expected features identifies which rows were used."
+  },
+  "limitations": [
+    "No per-row expected training feature values are stored in either CSV; single/batch checks confirm only current extraction self-consistency.",
+    "The model training manifest and filtering history are unavailable; metadata training_samples cannot establish exact row membership.",
+    "The two datasets are synthetic variants and share baseline identities within each file; this is not an independent identity adjudication of every citation DOI or title.",
+    "No live identifier resolution was performed."
+  ],
+  "recommended_next_experiments": [
+    "Locate the original training manifest and saved feature matrix to establish exact row membership and feature parity.",
+    "Define separate ground truths for publication identity and citation metadata correctness before any future training.",
+    "On a new held-out set, measure same-publication cases with wrong year, DOI, and author separately; do not tune on the 50-case evaluation set.",
+    "Test author_name_format and author_conflict behavior on realistic initials, surname-only citations, and incorrect names."
+  ]
+}

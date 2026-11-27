@@ -1,0 +1,21 @@
+{
+  "project": "Check My Citation",
+  "model_version": "4.1",
+  "status": "candidate",
+  "algorithm": "LogisticRegression",
+  "threshold": 0.5,
+  "feature_version": "4.1",
+  "features": [
+    "title_similarity",
+    "author_similarity",
+    "year_match",
+    "year_difference",
+    "doi_match",
+    "doi_available",
+    "author_token_match",
+    "author_identity_score",
+    "author_conflict"
+  ],
+  "training_samples": 5153,
+  "evaluation_note": "Metrics are from synthetic development benchmarks, not an untouched real-world test set."
+}
